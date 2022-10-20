@@ -1,24 +1,14 @@
-import _ from 'lodash';
 import './style.css';
-import Icon from './icon.png';
-import printMe from './print.js';
+import React from "react"
+import ReactDOM from "react-dom"
+import { Timer } from './Timer';
+import { TimerView } from './TimerView';
 
-function component() {
-  const element = document.createElement('div');
-  const btn = document.createElement('button');
-  element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-  element.classList.add('hello');
-  const myIcon = new Image();
-  myIcon.src = Icon;
+const myTimer = new Timer()
 
-  element.appendChild(myIcon);
+ReactDOM.render(<TimerView timer={myTimer} />, document.body)
 
-  btn.innerHTML = 'Click me and check the console!';
-  btn.onclick = printMe;
-
-  element.appendChild(btn);
-
-  return element;
-}
-
-document.body.appendChild(component());
+// Update the 'Seconds passed: X' text every second.
+setInterval(() => {
+  myTimer.increase()
+}, 1000)

@@ -5,7 +5,11 @@ module.exports = {
   mode: 'development',
   entry: {
     index: './src/index.js',
-    print: './src/print.js',
+  },
+  devtool: 'inline-source-map',
+  devServer: {
+    static: './dist',
+    hot: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -17,8 +21,16 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
+  optimization: {
+    runtimeChunk: 'single',
+  },
   module: {
     rules: [
+      {
+        test: /\.(js)$/,
+        exclude: /node_modules/,
+        use: ["babel-loader"],
+      },
       {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
@@ -29,4 +41,7 @@ module.exports = {
       },
     ],
   },
+  resolve: {
+    extensions: ["*", ".js"],
+  }
 };
